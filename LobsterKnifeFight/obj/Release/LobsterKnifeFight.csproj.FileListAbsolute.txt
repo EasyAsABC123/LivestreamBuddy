@@ -14,3 +14,13 @@ C:\Users\rboucher\Documents\Visual Studio 2012\Projects\LivestreamBuddy\LobsterK
 C:\Users\rboucher\Documents\Visual Studio 2012\Projects\LivestreamBuddy\LobsterKnifeFight\obj\Release\LobsterKnifeFight.csprojResolveAssemblyReference.cache
 C:\Users\rboucher\Documents\Visual Studio 2012\Projects\LivestreamBuddy\LobsterKnifeFight\obj\Release\LobsterKnifeFight.dll
 C:\Users\rboucher\Documents\Visual Studio 2012\Projects\LivestreamBuddy\LobsterKnifeFight\obj\Release\LobsterKnifeFight.pdb
+\\vmware-host\Shared Folders\Documents\Code\LiveStreamBuddy\LobsterKnifeFight\obj\Release\LobsterKnifeFight.csprojResolveAssemblyReference.cache
+\\vmware-host\Shared Folders\Documents\Code\LiveStreamBuddy\LobsterKnifeFight\obj\Release\LobsterKnifeFight.dll
+\\vmware-host\Shared Folders\Documents\Code\LiveStreamBuddy\LobsterKnifeFight\obj\Release\LobsterKnifeFight.pdb
+\\vmware-host\Shared Folders\Documents\Code\LiveStreamBuddy\LobsterKnifeFight\bin\Release\LobsterKnifeFight.dll
+\\vmware-host\Shared Folders\Documents\Code\LiveStreamBuddy\LobsterKnifeFight\bin\Release\LobsterKnifeFight.pdb
+\\vmware-host\Shared Folders\Documents\Code\LiveStreamBuddy\LobsterKnifeFight\bin\Release\Newtonsoft.Json.dll
+\\vmware-host\Shared Folders\Documents\Code\LiveStreamBuddy\LobsterKnifeFight\bin\Release\SmarIrc4net.dll
+\\vmware-host\Shared Folders\Documents\Code\LiveStreamBuddy\LobsterKnifeFight\bin\Release\Newtonsoft.Json.xml
+\\vmware-host\Shared Folders\Documents\Code\LiveStreamBuddy\LobsterKnifeFight\bin\Release\SmarIrc4net.pdb
+\\vmware-host\Shared Folders\Documents\Code\LiveStreamBuddy\LobsterKnifeFight\bin\Release\SmarIrc4net.xml

@@ -1,0 +1,164 @@
+﻿<html>
+	<head>
+		<style>
+			.pnlMessages
+			{
+				position: absolute;
+				left: 1px;
+				top: 1px;
+				overflow-y: auto;
+				padding: 3px 3px 3px 3px;
+                font: 14px calibri;
+			}
+			
+			.pnlMessages div
+			{
+				
+				margin: 4px 4px 4px 4px;
+			}
+		</style>
+		<script>
+		    var urlLocations = [];
+
+		    function resizeMessagesPanel(width, height) {
+		        var pnlMessages = document.getElementById('pnlMessages');
+
+		        if (width == -1) {
+		            width = window.innerWidth - 10;
+		        }
+
+		        if (height == -1) {
+		            height = window.innerHeight - 10;
+		        }
+
+		        pnlMessages.style.width = width + 'px';
+		        pnlMessages.style.maxWidth = width + 'px';
+		        pnlMessages.style.height = height + 'px';
+		        pnlMessages.style.maxHeight = height + 'px';
+		    }
+
+		    function clearMessages() {
+		        var pnlMessages = document.getElementById('pnlMessages');
+
+		        pnlMessages.innerHTML = '';
+		    }
+
+		    function scrollToBottom() {
+		        var pnlMessages = document.getElementById('pnlMessages');
+
+		        pnlMessages.scrollTop = pnlMessages.scrollHeight + 35;
+		    }
+
+		    function infoMessage(message) {
+		        var pnlMessages = document.getElementById('pnlMessages');
+		        var newLine = document.createElement('div');
+
+		        newLine.setAttribute('style', 'font-weight:bold;');
+		        newLine.innerHTML = message;
+
+		        pnlMessages.appendChild(newLine);
+		        scrollToBottom();
+		    }
+
+		    function errorMessage(message) {
+		        var pnlMessages = document.getElementById('pnlMessages');
+		        var newLine = document.createElement('div');
+
+		        newLine.setAttribute('style', 'color:red;font-weight:bold;');
+		        newLine.innerHTML = 'Error: ' + message;
+
+		        pnlMessages.appendChild(newLine);
+		        scrollToBottom();
+		    }
+
+		    function chatMessage(username, message, color) {
+		        var pnlMessages = document.getElementById('pnlMessages');
+		        var newChatLine = document.createElement('div');
+		        var nameField = document.createElement('span');
+		        var messageField = document.createElement('span');
+
+		        nameField.setAttribute('style', 'color:' + color + ';font-weight:bold;');
+		        nameField.innerHTML = username + ': ';
+
+		        messageField.innerHTML = message;
+
+		        newChatLine.appendChild(nameField);
+		        newChatLine.appendChild(messageField);
+		        pnlMessages.appendChild(newChatLine);
+		        scrollToBottom();
+		    }
+
+		    function isInLocation(index, locations) {
+		        var returnValue = false;
+
+		        for (var i = 0; i < locations.length; i++) {
+		            var location = locations[i];
+
+		            if (index > location.Start && index < (location.Start + location.Length)) {
+		                returnValue = true;
+		                break;
+		            }
+		        }
+
+		        return returnValue;
+		    }
+
+		    function chatMessageTwo(timestamp, username, message, color) {
+		        var pnlMessages = document.getElementById('pnlMessages');
+		        var newChatLine = document.createElement('div');
+		        var nameField = document.createElement('span');
+		        var messageField = document.createElement('span');
+
+		        nameField.setAttribute('style', 'color:' + color + ';font-weight:bold;');
+		        nameField.innerHTML = "<span style=\"cursor:pointer\" onclick=\"linkClick('http://twitch.tv/" + username + "');\">" + timestamp + username + ":</span> ";
+
+		        if (emoticons != null && emoticons.length > 0) {
+		            var emoticonPattern;
+
+		            for (var i = 0; i < emoticons.length; i++) {
+		                var emoticon = emoticons[i];
+		                emoticonPattern = new RegExp("\\b" + emoticon.Pattern + "\\b", "gi");
+
+		                while (emoticonPattern.test(message) == true) {
+		                    var matchIndex = emoticonPattern.lastIndex - emoticon.Pattern.length;
+		                    var isMatchInURL = isInLocation(matchIndex, urlLocations);
+
+		                    if (!isMatchInURL) {
+		                        var before = message.substr(0, matchIndex);
+		                        var after = message.substr(matchIndex + emoticon.Pattern.length);
+		                        var url = "<img src=\"" + emoticon.Url + "\" />";
+
+		                        message = before + url + after;
+
+		                        for (var z = 0; z < urlLocations.length; z++) {
+		                            var urlLocation = urlLocations[z];
+
+		                            if (matchIndex > (urlLocation.Start + urlLocation.Length)) {
+		                                continue;
+		                            }
+		                            else {
+		                                urlLocation.Start += url.length - emoticon.Pattern.length;
+		                            }
+		                        }
+		                    }
+		                }
+		            }
+		        }
+
+		        messageField.innerHTML = message;
+
+		        newChatLine.appendChild(nameField);
+		        newChatLine.appendChild(messageField);
+		        pnlMessages.appendChild(newChatLine);
+		        scrollToBottom();
+		    }
+
+		    function linkClick(url) {
+		        jsobject.HostRaiseLinkClick(url);
+		    }
+		</script>
+	</head>
+	<body>
+		<div id='pnlMessages' class='pnlMessages'></div>
+	</body>
+</html>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>SmartIrc4net</id>
+    <version>0.4.5.1</version>
+    <title>SmartIrc4net (Unofficial)</title>
+    <authors>Mirco Bauer</authors>
+    <owners>Mirco Bauer</owners>
+    <projectUrl>https://www.meebey.net/projects/smartirc4net/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>SmartIrc4net is a multi-threaded and thread-safe IRC library written in C#. It allows you to communicate with IRC servers. The API features full channel syncing and is split in 3 layers: IrcConnection, IrcCommands and IrcClient.</description>
+    <summary>Unofficial package release of SmartIrc4net 0.4.5.1</summary>
+    <copyright>2003-2008 (C) Mirco Bauer &lt;meebey@meebey.net&gt;</copyright>
+  </metadata>
+</package>

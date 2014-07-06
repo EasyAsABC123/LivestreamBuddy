@@ -44,8 +44,15 @@
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Awesomium.Core, Version=1.7.2.2, Culture=neutral, PublicKeyToken=e1a0d7c8071a5214, processorArchitecture=x86" />
-    <Reference Include="awesomium.windows.controls, Version=1.7.2.2, Culture=neutral, PublicKeyToken=7a34e179b8b61c39, processorArchitecture=x86" />
+    <Reference Include="Awesomium.Core, Version=1.7.4.2, Culture=neutral, PublicKeyToken=e1a0d7c8071a5214, processorArchitecture=x86" />
+    <Reference Include="Awesomium.Windows.Controls, Version=1.7.4.2, Culture=neutral, PublicKeyToken=7a34e179b8b61c39, processorArchitecture=x86" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SmarIrc4net">
+      <HintPath>..\packages\SmartIrc4net.0.4.5.1\lib\net40\SmarIrc4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -171,6 +178,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -187,17 +195,9 @@
     <Resource Include="Resources\live.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ConsoleApplication2\SmartIrc4net\SmartIrc4net.csproj">
-      <Project>{e3aec043-36e1-49f0-afc4-295397f33cc7}</Project>
-      <Name>SmartIrc4net</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LobsterKnifeFight\LobsterKnifeFight.csproj">
       <Project>{1530732e-973a-4e53-bfb4-e373fb127c44}</Project>
       <Name>LobsterKnifeFight</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Newtonsoft.Json\Newtonsoft.Json.Net40.csproj">
-      <Project>{a9ae40ff-1a21-414a-9fe7-3be13644cc6d}</Project>
-      <Name>Newtonsoft.Json.Net40</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

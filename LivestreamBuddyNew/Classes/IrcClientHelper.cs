@@ -77,9 +77,9 @@ namespace LivestreamBuddyNew
 
                     this.trafficWriter = File.CreateText(string.Format("{0}_{1}{2}{3}.txt",
                         this.channelName,
-                        now.Year.ToString(),
-                        now.Month.ToString(),
-                        now.Day.ToString()));
+                        now.Year,
+                        now.Month,
+                        now.Day));
 
                     this.trafficWriter.AutoFlush = true;
                     client.OnRawMessage += client_OnRawMessage;
@@ -107,7 +107,6 @@ namespace LivestreamBuddyNew
             if (workerThread != null)
             {
                 this.shouldStop = true;
-                this.client.RequestStop();
                 LeaveChannel();
                 this.workerThread.Join();
 
