@@ -3,21 +3,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Awesomium.Core;
+using LiveStreamBuddy.Classes;
 using LobsterKnifeFight;
 
-namespace LivestreamBuddyNew
+namespace LiveStreamBuddy
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -55,18 +49,11 @@ namespace LivestreamBuddyNew
 
             emoticons = null;
 
-            bool refreshEmoticons = false;
-            string[] commandLineArgs = Environment.GetCommandLineArgs();
+	        string[] commandLineArgs = Environment.GetCommandLineArgs();
 
-            foreach (string arg in commandLineArgs)
-            {
-                if (string.Compare(arg, "-refreshemoticons", StringComparison.OrdinalIgnoreCase) == 0)
-                {
-                    refreshEmoticons = true;
-                }
-            }
+	        bool refreshEmoticons = commandLineArgs.Any(arg => string.Compare(arg, "-refreshemoticons", StringComparison.OrdinalIgnoreCase) == 0);
 
-            if (userOptions.ShowEmoticonsInChat)
+	        if (userOptions.ShowEmoticonsInChat)
             {
                 try
                 {
@@ -92,21 +79,10 @@ namespace LivestreamBuddyNew
 
         private bool isStreamVisible(string channelName)
         {
-            bool visible = false;
-
-            foreach (string stream in visibleStreams)
-            {
-                if (string.Compare(stream, channelName, StringComparison.OrdinalIgnoreCase) == 0)
-                {
-                    visible = true;
-                    break;
-                }
-            }
-
-            return visible;
+	        return visibleStreams.Any(stream => string.Compare(stream, channelName, StringComparison.OrdinalIgnoreCase) == 0);
         }
 
-        # endregion
+	    # endregion
 
         # region Events
 

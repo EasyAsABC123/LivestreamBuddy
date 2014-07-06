@@ -1,0 +1,7 @@
+OpenStreamsInNewTab true
+ShowStreamFeedWhenOpening true
+ShowTimestampsInChat false
+EnableDebugLogging false
+ChatTextSize 14
+ShowEmoticonsInChat true
+LogAllIRCTraffic false

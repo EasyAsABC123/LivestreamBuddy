@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using LiveStreamBuddy.Classes;
 
-namespace LivestreamBuddyNew.Controls
+namespace LiveStreamBuddy.Controls
 {
     /// <summary>
     /// Interaction logic for Options.xaml
@@ -36,7 +27,7 @@ namespace LivestreamBuddyNew.Controls
 
         # region Public Members
 
-        public LivestreamBuddyNew.Options UserOptions { get; set; }
+        public Classes.Options UserOptions { get; set; }
 
         # endregion
 

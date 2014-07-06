@@ -120,3 +120,4 @@ C:\dev\LivestreamBuddy\LivestreamBuddyNew\obj\Release\LivestreamBuddyNew.csproj.
 \\vmware-host\Shared Folders\Documents\Code\LiveStreamBuddy\LivestreamBuddyNew\obj\Release\LivestreamBuddyNew.csproj.GenerateResource.Cache
 \\vmware-host\Shared Folders\Documents\Code\LiveStreamBuddy\LivestreamBuddyNew\bin\Release\LivestreamBuddyNew.exe
 \\vmware-host\Shared Folders\Documents\Code\LiveStreamBuddy\LivestreamBuddyNew\bin\Release\LivestreamBuddyNew.pdb
+\\vmware-host\Shared Folders\Documents\Code\LiveStreamBuddy\LivestreamBuddyNew\bin\Release\LiveStreamBuddy.exe.config

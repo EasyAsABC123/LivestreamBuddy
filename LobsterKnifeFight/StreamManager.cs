@@ -74,7 +74,6 @@ namespace LobsterKnifeFight
                     break;
                 case TwitchRequestResults.Unauthorized:
                     throw new TwitchRequestUnauthorizedException();
-                    break;
             }
 
             return stream;
@@ -101,32 +100,20 @@ namespace LobsterKnifeFight
                     }
                     else if (rawStreams["streams"] != null && rawStreams["streams"].HasValues)
                     {
-                        foreach (JToken child in rawStreams["streams"].ToArray())
-                        {
-                            LobsterKnifeFight.Stream stream = null;
-
-                            stream = new LobsterKnifeFight.Stream
-                            {
-                                IsOnline = true,
-                                Id = (Int64)child["_id"],
-                                Game = (string)child["game"],
-                                ViewerCount = (Int64)child["viewers"],
-                                Channel = new LobsterKnifeFight.Channel
-                                {
-                                    Id = (Int64)child["channel"]["_id"],
-                                    Name = (string)child["channel"]["name"],
-                                    Title = (string)child["channel"]["status"]
-                                }
-                            };
-
-                            streams.Add(stream);
-                        }
+	                    streams.AddRange(from child in rawStreams["streams"].ToArray()
+		                    let stream = null
+		                    select new LobsterKnifeFight.Stream
+		                    {
+			                    IsOnline = true, Id = (Int64) child["_id"], Game = (string) child["game"], ViewerCount = (Int64) child["viewers"], Channel = new LobsterKnifeFight.Channel
+			                    {
+				                    Id = (Int64) child["channel"]["_id"], Name = (string) child["channel"]["name"], Title = (string) child["channel"]["status"]
+			                    }
+		                    });
                     }
 
                     break;
                 case TwitchRequestResults.Unauthorized:
                     throw new TwitchRequestUnauthorizedException();
-                    break;
             }
 
             return streams;
@@ -153,30 +140,18 @@ namespace LobsterKnifeFight
                     }
                     else if (rawFollowedStreams["streams"] != null && rawFollowedStreams["streams"].HasValues)
                     {
-                        foreach (JToken child in rawFollowedStreams["streams"].ToArray())
-                        {
-                            LobsterKnifeFight.Stream stream = new LobsterKnifeFight.Stream
-                            {
-                                IsOnline = true,
-                                Id = (Int64)child["_id"],
-                                Game = (string)child["game"],
-                                ViewerCount = (Int64)child["viewers"],
-                                Channel = new LobsterKnifeFight.Channel
-                                {
-                                    Id = (Int64)child["channel"]["_id"],
-                                    Name = (string)child["channel"]["name"],
-                                    Title = (string)child["channel"]["status"]
-                                }
-                            };
-
-                            streams.Add(stream);
-                        }
+	                    streams.AddRange(rawFollowedStreams["streams"].ToArray().Select(child => new LobsterKnifeFight.Stream
+	                    {
+		                    IsOnline = true, Id = (Int64) child["_id"], Game = (string) child["game"], ViewerCount = (Int64) child["viewers"], Channel = new LobsterKnifeFight.Channel
+		                    {
+			                    Id = (Int64) child["channel"]["_id"], Name = (string) child["channel"]["name"], Title = (string) child["channel"]["status"]
+		                    }
+	                    }));
                     }
 
                     break;
                 case TwitchRequestResults.Unauthorized:
                     throw new TwitchRequestUnauthorizedException();
-                    break;
             }
 
             return streams;
@@ -198,30 +173,18 @@ namespace LobsterKnifeFight
                     }
                     else if (rawFeaturedStreams["featured"] != null && rawFeaturedStreams["featured"].HasValues)
                     {
-                        foreach (JToken child in rawFeaturedStreams["featured"].ToArray())
-                        {
-                            LobsterKnifeFight.Stream stream = new LobsterKnifeFight.Stream
-                            {
-                                IsOnline = true,
-                                Id = (Int64)child["stream"]["_id"],
-                                Game = (string)child["stream"]["game"],
-                                ViewerCount = (Int64)child["stream"]["viewers"],
-                                Channel = new LobsterKnifeFight.Channel
-                                {
-                                    Id = (Int64)child["stream"]["channel"]["_id"],
-                                    Name = (string)child["stream"]["channel"]["name"],
-                                    Title = (string)child["stream"]["channel"]["status"]
-                                }
-                            };
-
-                            streams.Add(stream);
-                        }
+	                    streams.AddRange(rawFeaturedStreams["featured"].ToArray().Select(child => new LobsterKnifeFight.Stream
+	                    {
+		                    IsOnline = true, Id = (Int64) child["stream"]["_id"], Game = (string) child["stream"]["game"], ViewerCount = (Int64) child["stream"]["viewers"], Channel = new LobsterKnifeFight.Channel
+		                    {
+			                    Id = (Int64) child["stream"]["channel"]["_id"], Name = (string) child["stream"]["channel"]["name"], Title = (string) child["stream"]["channel"]["status"]
+		                    }
+	                    }));
                     }
 
                     break;
                 case TwitchRequestResults.Unauthorized:
                     throw new TwitchRequestUnauthorizedException();
-                    break;
             }
 
             return streams;

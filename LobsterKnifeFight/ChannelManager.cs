@@ -66,7 +66,6 @@ namespace LobsterKnifeFight
                     break;
                 case TwitchRequestResults.Unauthorized:
                     throw new TwitchRequestUnauthorizedException();
-                    break;
             }
         }
 
@@ -112,7 +111,6 @@ namespace LobsterKnifeFight
                     break;
                 case TwitchRequestResults.Unauthorized:
                     throw new TwitchRequestUnauthorizedException();
-                    break;
             }
         }
 

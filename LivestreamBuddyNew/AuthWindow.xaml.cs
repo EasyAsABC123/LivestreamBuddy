@@ -1,23 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Awesomium.Core;
 using LobsterKnifeFight;
 
-namespace LivestreamBuddyNew
+namespace LiveStreamBuddy
 {
     /// <summary>
-    /// Interaction logic for AuthWindow.xaml
+	/// Interaction logic for AuthWindow.xaml client_id: a8t13c4i3clujv1irur7rfpu3u1weuz client_secret: rrm09e9t3lvjm023pvnb9lt6qhqvue9
     /// </summary>
     public partial class AuthWindow : Window
     {
@@ -64,63 +54,57 @@ namespace LivestreamBuddyNew
         {
             webBrowser.LoadHTML("<html><body><h3>Loading...</h3></body></html>");
 
-            string userscopes = string.Empty;
+            string userscopes = Scopes.Aggregate(string.Empty, (current, scope) => current + (EnumHelper.GetUserScope(scope) + " "));
 
-            for (int i = 0; i < Scopes.Length; i++)
-            {
-                UserScope scope = Scopes[i];
+	        userscopes = userscopes.Remove(userscopes.Length - 1, 1);
 
-                if (i + 1 < Scopes.Length)
-                {
-                    userscopes += EnumHelper.GetUserScope(scope) + " ";
-                }
-                else
-                {
-                    userscopes += EnumHelper.GetUserScope(scope);
-                }
-            }
-
-            webBrowser.Source = new Uri("https://api.twitch.tv/kraken/oauth2/authorize?response_type=token&client_id=a13o59im5mfpi5y8afoc3jer8vidva0&redirect_uri=http://www.google.com&scope=" + userscopes);
+			webBrowser.Source = new Uri("https://api.twitch.tv/kraken/oauth2/authorize?response_type=token&client_id=a8t13c4i3clujv1irur7rfpu3u1weuz&redirect_uri=http://xim.schucreations.com&scope=" + userscopes);
         }
 
-        void webBrowser_LoadingFrame(object sender, Awesomium.Core.LoadingFrameEventArgs e)
-        {
-            if (webBrowser.IsDocumentReady)
-            {
-                dynamic document = (JSObject)webBrowser.ExecuteJavascriptWithResult("document");
+	    private void webBrowser_LoadingFrame(object sender, LoadingFrameEventArgs e)
+	    {
+		    if (!webBrowser.IsDocumentReady)
+			    return;
 
-                if (document != null)
-                {
-                    using (document)
-                    {
-                        dynamic userLoginField = document.getElementById("user_login");
+		    dynamic document = (JSObject) webBrowser.ExecuteJavascriptWithResult("document");
 
-                        if (!Object.ReferenceEquals(null, userLoginField))
-                        {
-                            try
-                            {
-                                string value = (string)userLoginField.value;
+		    if (document == null)
+			    return;
 
-                                if (!string.IsNullOrEmpty(value))
-                                {
-                                    if (string.IsNullOrEmpty(user.Name))
-                                    {
-                                        user.Name = value;
-                                    }
-                                    else if (string.Compare(user.Name, value, StringComparison.OrdinalIgnoreCase) != 0)
-                                    {
-                                        this.saveAccessToken = false;
-                                    }
-                                }
-                            }
-                            catch { this.saveAccessToken = true; }
-                        }
-                    }
-                }
-            }
-        }
+		    using (document)
+		    {
+			    dynamic userLoginField = document.getElementById("user_login");
 
-        void webBrowser_DocumentReady(object sender, Awesomium.Core.UrlEventArgs e)
+			    if (userLoginField == null)
+				    return;
+
+			    using (userLoginField)
+			    {
+				    try
+				    {
+					    string value = (string) userLoginField.value;
+
+					    if (!string.IsNullOrEmpty(value))
+					    {
+						    if (string.IsNullOrEmpty(user.Name))
+						    {
+							    user.Name = value;
+						    }
+						    else if (string.Compare(user.Name, value, StringComparison.OrdinalIgnoreCase) != 0)
+						    {
+							    this.saveAccessToken = false;
+						    }
+					    }
+				    }
+				    catch
+				    {
+					    this.saveAccessToken = true;
+				    }
+			    }
+		    }
+	    }
+
+	    void webBrowser_DocumentReady(object sender, UrlEventArgs e)
         {
             if (!string.IsNullOrEmpty(e.Url.Fragment))
             {

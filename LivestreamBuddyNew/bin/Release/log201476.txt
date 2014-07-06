@@ -1,3 +1,9 @@
 18:25:58:62 - LivestreamBuddyNew.IrcClientHelper.loginJoinAndStartAllTheThings() - The calling thread cannot access this object because a different thread owns it.
 Stacktrace: 
 
+19:7:36:500 - LiveStreamBuddy.Classes.IrcClientHelper.loginJoinAndStartAllTheThings() - The calling thread cannot access this object because a different thread owns it.
+Stacktrace: 
+
+19:30:26:837 - LiveStreamBuddy.Classes.IrcClientHelper.loginJoinAndStartAllTheThings() - The calling thread cannot access this object because a different thread owns it.
+Stacktrace: 
+

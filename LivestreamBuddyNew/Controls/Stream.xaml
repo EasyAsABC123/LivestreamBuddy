@@ -1,4 +1,4 @@
-﻿<UserControl xmlns:Controls1="clr-namespace:LivestreamBuddyNew.Controls"  xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"  xmlns:my="http://schemas.awesomium.com/winfx"  x:Class="LivestreamBuddyNew.Controls.Stream"
+﻿<UserControl xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"  xmlns:my="http://schemas.awesomium.com/winfx"  x:Class="LiveStreamBuddy.Controls.Stream"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

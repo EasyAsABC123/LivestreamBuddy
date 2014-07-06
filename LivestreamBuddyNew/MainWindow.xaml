@@ -1,7 +1,7 @@
-﻿<Window x:Class="LivestreamBuddyNew.MainWindow"
+﻿<Window x:Class="LiveStreamBuddy.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="clr-namespace:LivestreamBuddyNew.Controls"
+        xmlns:controls="clr-namespace:LiveStreamBuddy.Controls"
         Title="Livestream Buddy" Height="675" Width="550" MinHeight="675" MinWidth="550" Icon="livestream-ICON.ico">
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">

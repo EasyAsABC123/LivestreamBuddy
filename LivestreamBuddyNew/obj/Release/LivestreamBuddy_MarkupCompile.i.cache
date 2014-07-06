@@ -1,20 +1,20 @@
-﻿LivestreamBuddy
+﻿LiveStreamBuddy
 
 
 winexe
 C#
 .cs
-C:\Users\rboucher\Documents\Visual Studio 2012\Projects\LivestreamBuddy\LivestreamBuddyNew\obj\Release\
-LivestreamBuddyNew
+\\vmware-host\Shared Folders\Documents\Code\LiveStreamBuddy\LivestreamBuddyNew\obj\Release\
+LiveStreamBuddy
 none
 false
 TRACE
-C:\Users\rboucher\Documents\Visual Studio 2012\Projects\LivestreamBuddy\LivestreamBuddyNew\App.xaml
-7-1443494425
-3-1416555135
-20-143048740
-21-337080267
-AuthWindow.xaml;Controls\Channels.xaml;Controls\CloseableHeader.xaml;Controls\Giveaway.xaml;Controls\Stream.xaml;MainWindow.xaml;SingleTextBoxWindow.xaml;
+\\vmware-host\Shared Folders\Documents\Code\LiveStreamBuddy\LivestreamBuddyNew\App.xaml
+10-1827424943
+41763219459
+21-1575760088
+23-1622243061
+AuthWindow.xaml;Controls\Channels.xaml;Controls\CloseableHeader.xaml;Controls\Giveaway.xaml;Controls\Options.xaml;Controls\Stream.xaml;Controls\ViewStream.xaml;MainWindow.xaml;SingleTextBoxWindow.xaml;ViewStreamWindow.xaml;
 
 False
 

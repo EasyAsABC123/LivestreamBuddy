@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamBuddyOld", "LivestreamBuddy\LivestreamBuddyOld.csproj", "{7490B27F-BCC8-4089-95A3-D9E3731EEF87}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LobsterKnifeFight", "LobsterKnifeFight\LobsterKnifeFight.csproj", "{1530732E-973A-4E53-BFB4-E373FB127C44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamBuddyNew", "LivestreamBuddyNew\LivestreamBuddyNew.csproj", "{E112A388-6DBF-48E8-AF96-036234B17308}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveStreamBuddy", "LivestreamBuddyNew\LiveStreamBuddy.csproj", "{E112A388-6DBF-48E8-AF96-036234B17308}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7490B27F-BCC8-4089-95A3-D9E3731EEF87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7490B27F-BCC8-4089-95A3-D9E3731EEF87}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7490B27F-BCC8-4089-95A3-D9E3731EEF87}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7490B27F-BCC8-4089-95A3-D9E3731EEF87}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1530732E-973A-4E53-BFB4-E373FB127C44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1530732E-973A-4E53-BFB4-E373FB127C44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1530732E-973A-4E53-BFB4-E373FB127C44}.Release|Any CPU.ActiveCfg = Release|Any CPU

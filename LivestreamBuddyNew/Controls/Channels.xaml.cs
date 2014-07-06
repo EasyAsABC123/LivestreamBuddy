@@ -3,23 +3,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using LiveStreamBuddy.Classes;
 using LobsterKnifeFight;
 
-namespace LivestreamBuddyNew.Controls
+namespace LiveStreamBuddy.Controls
 {
     /// <summary>
     /// Interaction logic for Streams.xaml
@@ -93,21 +86,10 @@ namespace LivestreamBuddyNew.Controls
 
         private bool streamExists(string channelName)
         {
-            bool exists = false;
-
-            foreach (ChannelInfo channelInfo in channels)
-            {
-                if (string.Compare(channelInfo.Name, channelName, StringComparison.OrdinalIgnoreCase) == 0)
-                {
-                    exists = true;
-                    break;
-                }
-            }
-
-            return exists;
+	        return channels.Any(channelInfo => string.Compare(channelInfo.Name, channelName, StringComparison.OrdinalIgnoreCase) == 0);
         }
 
-        private void addStreamToFavoritesList(string streamName, bool isFavorite = false)
+	    private void addStreamToFavoritesList(string streamName, bool isFavorite = false)
         {
             if (!streamExists(streamName))
             {
@@ -140,17 +122,10 @@ namespace LivestreamBuddyNew.Controls
 
         private string getChannelsFromList()
         {
-            string channelsList = string.Empty;
-
-            foreach (ChannelInfo channel in channels)
-            {
-                channelsList += channel.Name + ",";
-            }
-
-            return channelsList;
+	        return channels.Aggregate(string.Empty, (current, channel) => current + (channel.Name + ","));
         }
 
-        private void workerCheckChannelsStatus()
+	    private void workerCheckChannelsStatus()
         {
             string channels = getChannelsFromList();
             List<LobsterKnifeFight.Stream> streams = null;
@@ -212,18 +187,15 @@ namespace LivestreamBuddyNew.Controls
             {
                 bool found = false;
 
-                foreach (LobsterKnifeFight.Stream stream in streams)
+                foreach (LobsterKnifeFight.Stream stream in streams.Where(stream => string.Compare(channel.Name, stream.Channel.Name, StringComparison.OrdinalIgnoreCase) == 0))
                 {
-                    if (string.Compare(channel.Name, stream.Channel.Name, StringComparison.OrdinalIgnoreCase) == 0)
-                    {
-                        channel.StreamTitle = stream.Channel.Title;
-                        channel.Game = stream.Game;
-                        channel.Viewers = stream.ViewerCount;
-                        channel.OnlineIndicator = onlineImage;
+	                channel.StreamTitle = stream.Channel.Title;
+	                channel.Game = stream.Game;
+	                channel.Viewers = stream.ViewerCount;
+	                channel.OnlineIndicator = onlineImage;
 
-                        found = true;
-                        break;
-                    }
+	                found = true;
+	                break;
                 }
 
                 if (!found)

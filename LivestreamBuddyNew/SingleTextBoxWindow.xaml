@@ -1,4 +1,4 @@
-﻿<Window x:Class="LivestreamBuddyNew.SingleTextBoxWindow"
+﻿<Window x:Class="LiveStreamBuddy.SingleTextBoxWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="SingleTextBoxWindow" Height="115" Width="350" Icon="livestream-ICON.ico" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">

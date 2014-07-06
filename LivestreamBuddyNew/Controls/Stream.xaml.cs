@@ -3,24 +3,20 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Awesomium.Core;
+using LiveStreamBuddy.Classes;
+using LiveStreamBuddy.Enums;
 using LobsterKnifeFight;
 using Newtonsoft.Json;
 
-namespace LivestreamBuddyNew.Controls
+namespace LiveStreamBuddy.Controls
 {
     /// <summary>
     /// Interaction logic for Stream.xaml
@@ -278,7 +274,7 @@ namespace LivestreamBuddyNew.Controls
         # region Private Members
 
         private User user;
-        private LivestreamBuddyNew.Options options;
+        private Classes.Options options;
         private string channelName;
         private string accessToken;
         private IrcClientHelper client;

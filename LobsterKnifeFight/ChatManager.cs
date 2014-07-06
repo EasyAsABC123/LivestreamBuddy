@@ -45,19 +45,11 @@ namespace LobsterKnifeFight
                 }
                 else if (rawChat["emoticons"] != null && rawChat["emoticons"].HasValues)
                 {
-                    emoticons = new List<Emoticon>();
-
-                    foreach (JToken child in rawChat["emoticons"].ToArray())
+                    emoticons = rawChat["emoticons"].ToArray().Select(child => new Emoticon
                     {
-                        emoticons.Add(new Emoticon
-                        {
-                            Pattern = (string)child["regex"],
-                            //Height = (Int32)child["images"][0]["height"],
-                            //Width = (Int32)child["images"][0]["width"],
-                            Url = (string)child["images"][0]["url"]
-                            //Set = (Int32)child["images"][0]["emoticon_set"]
-                        });
-                    }
+	                    Pattern = (string) child["regex"],
+	                    Url = (string) child["images"][0]["url"]
+                    }).ToList();
                 }
 
                 if (emoticons == null)

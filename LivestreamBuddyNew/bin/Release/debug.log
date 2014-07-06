@@ -43,3 +43,32 @@
 [1018/163905:INFO:(0)] Running Awesomium 1.7.2
 [0706/182458:INFO:(0)] WebCore is now online.
 [0706/182458:INFO:(0)] Running Awesomium 1.7.4.2
+[0706/182917:INFO:(0)] WebCore is now online.
+[0706/182917:INFO:(0)] Running Awesomium 1.7.4.2
+[0706/183356:INFO:(0)] WebCore is now online.
+[0706/183356:INFO:(0)] Running Awesomium 1.7.4.2
+[0706/183922:INFO:(0)] WebCore is now online.
+[0706/183922:INFO:(0)] Running Awesomium 1.7.4.2
+[0706/184200:INFO:(0)] WebCore is now online.
+[0706/184200:INFO:(0)] Running Awesomium 1.7.4.2
+[0706/185010:INFO:(0)] WebCore is now online.
+[0706/185010:INFO:(0)] Running Awesomium 1.7.4.2
+[0706/185214:INFO:(0)] WebCore is now online.
+[0706/185214:INFO:(0)] Running Awesomium 1.7.4.2
+[0706/185217:ERROR:ipc_channel_win.cc(326)] pipe error: 109
+[0706/185522:INFO:(0)] WebCore is now online.
+[0706/185522:INFO:(0)] Running Awesomium 1.7.4.2
+[0706/190133:INFO:(0)] WebCore is now online.
+[0706/190133:INFO:(0)] Running Awesomium 1.7.4.2
+[0706/190138:WARNING:(0)] Cannot convert null to 'bool' because it is a non-nullable value type
+[0706/190138:ERROR:ipc_channel_win.cc(261)] pipe error: 109
+[0706/190226:INFO:(0)] WebCore is now online.
+[0706/190226:INFO:(0)] Running Awesomium 1.7.4.2
+[0706/191038:INFO:(0)] WebCore is now online.
+[0706/191038:INFO:(0)] Running Awesomium 1.7.4.2
+[0706/192850:INFO:(0)] WebCore is now online.
+[0706/192850:INFO:(0)] Running Awesomium 1.7.4.2
+[0706/193213:INFO:(0)] WebCore is now online.
+[0706/193213:INFO:(0)] Running Awesomium 1.7.4.2
+[0706/193852:INFO:(0)] WebCore is now online.
+[0706/193852:INFO:(0)] Running Awesomium 1.7.4.2

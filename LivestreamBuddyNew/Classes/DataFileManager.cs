@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using LobsterKnifeFight;
 
-namespace LivestreamBuddyNew
+namespace LiveStreamBuddy.Classes
 {
     public static class DataFileManager
     {
@@ -39,18 +36,9 @@ namespace LivestreamBuddyNew
 
         public static void AddFavoriteChannel(string newChannel)
         {
-            bool exists = false;
+            bool exists = GetFavoriteChannels().Any(channel => string.Compare(newChannel, channel, StringComparison.OrdinalIgnoreCase) == 0);
 
-            foreach (string channel in GetFavoriteChannels())
-            {
-                if (string.Compare(newChannel, channel, StringComparison.OrdinalIgnoreCase) == 0)
-                {
-                    exists = true;
-                    break;
-                }
-            }
-
-            if (!exists)
+	        if (!exists)
             {
                 using (StreamWriter writer = File.AppendText(favoriteChannelsFileName))
                 {
@@ -61,17 +49,9 @@ namespace LivestreamBuddyNew
 
         public static void RemoveFavoriteChannel(string channelName)
         {
-            List<string> channels = new List<string>();
+            List<string> channels = GetFavoriteChannels().Where(channel => string.Compare(channelName, channel, StringComparison.OrdinalIgnoreCase) != 0).ToList();
 
-            foreach (string channel in GetFavoriteChannels())
-            {
-                if (string.Compare(channelName, channel, StringComparison.OrdinalIgnoreCase) != 0)
-                {
-                    channels.Add(channel);
-                }
-            }
-
-            using (StreamWriter writer = File.CreateText(favoriteChannelsFileName))
+	        using (StreamWriter writer = File.CreateText(favoriteChannelsFileName))
             {
                 foreach (string channel in channels)
                 {
@@ -218,18 +198,9 @@ namespace LivestreamBuddyNew
         private static void addStringToAutoComplete(string fileName, string value)
         {
             string[] strings = getAutoCompleteStrings(fileName);
-            bool alreadyExists = false;
+            bool alreadyExists = strings.Any(fileValue => string.CompareOrdinal(fileValue, value) == 0);
 
-            foreach (string fileValue in strings)
-            {
-                if (string.CompareOrdinal(fileValue, value) == 0)
-                {
-                    alreadyExists = true;
-                    break;
-                }
-            }
-
-            if (alreadyExists == false)
+	        if (alreadyExists == false)
             {
                 try
                 {

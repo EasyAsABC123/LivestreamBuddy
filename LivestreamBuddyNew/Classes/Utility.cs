@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using LobsterKnifeFight;
 
-namespace LivestreamBuddyNew
+namespace LiveStreamBuddy.Classes
 {
     public static class Utility
     {
