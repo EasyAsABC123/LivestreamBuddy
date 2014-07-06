@@ -3,21 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:LiveStreamBuddy.Controls"
         Title="Livestream Buddy" Height="675" Width="550" MinHeight="675" MinWidth="550" Icon="livestream-ICON.ico">
-    <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-            <GradientStop Color="#FF515151" Offset="0"/>
-            <GradientStop Color="LightGray" Offset="1"/>
-        </LinearGradientBrush>
-    </Window.Background>
-    <Border Padding="13 13 13 13">
-        <DockPanel>
-            <Button DockPanel.Dock="Bottom" Height="24" Width="200" Margin="0 7 0 0" Click="HelpClick">Help / FAQ</Button>
-            <Button DockPanel.Dock="Bottom" Height="24" Width="200" Margin="0 7 0 0" Click="OptionsClick">Options</Button>
-            <TabControl Name="mainTabs" DockPanel.Dock="Top">
-                <TabItem Header="Channels">
-                    <controls:Channels x:Name="channelsControl"></controls:Channels>
-                </TabItem>
-            </TabControl>
-        </DockPanel>
-    </Border>
+	<Window.Background>
+		<LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+			<GradientStop Color="#FF515151" Offset="0" />
+			<GradientStop Color="LightGray" Offset="1" />
+		</LinearGradientBrush>
+	</Window.Background>
+	<Border Padding="13 13 13 13">
+		<DockPanel>
+			<Button DockPanel.Dock="Bottom" Height="24" Width="200" Margin="0 7 0 0" Click="HelpClick">Help / FAQ</Button>
+			<Button DockPanel.Dock="Bottom" Height="24" Width="200" Margin="0 7 0 0" Click="OptionsClick">Options</Button>
+			<TabControl Name="mainTabs" DockPanel.Dock="Top">
+				<TabItem Header="Channels">
+					<controls:Channels x:Name="channelsControl" />
+				</TabItem>
+			</TabControl>
+		</DockPanel>
+	</Border>
 </Window>

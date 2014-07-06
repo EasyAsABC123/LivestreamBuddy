@@ -93,9 +93,9 @@ namespace LiveStreamBuddy.Controls
                 System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
 
                 int i = 0;
-                string[] words = new string[] { "AND ", "THE ", "WINNER ", "IS ", ".", ".", "." };
+                string[] words = { "AND ", "THE ", "WINNER ", "IS ", ".", ".", "." };
 
-                dispatcherTimer.Tick += delegate(object timerSender, EventArgs timerArgs)
+                dispatcherTimer.Tick += delegate
                 {
                     if (i < words.Length)
                     {
