@@ -4,65 +4,65 @@ using LiveStreamBuddy.Controls;
 
 namespace LiveStreamBuddy
 {
-    /// <summary>
-    /// Interaction logic for ViewStreamWindow.xaml
-    /// </summary>
-    public partial class ViewStreamWindow : Window
-    {
-        public ViewStreamWindow()
-        {
-            InitializeComponent();
-        }
+	/// <summary>
+	///     Interaction logic for ViewStreamWindow.xaml
+	/// </summary>
+	public partial class ViewStreamWindow : Window
+	{
+		public ViewStreamWindow()
+		{
+			InitializeComponent();
+		}
 
-        public ViewStreamWindow(string channelName, double minimumHeight)
-            : this()
-        {
-            this.Title = "View stream - " + channelName;
-            this.ViewStream = new ViewStream(channelName, true, minimumHeight);
-            container.Child = this.ViewStream;
+		public ViewStreamWindow(string channelName, double minimumHeight)
+			: this()
+		{
+			Title = "View stream - " + channelName;
+			ViewStream = new ViewStream(channelName, true, minimumHeight);
+			container.Child = ViewStream;
 
-            minimumHeight += 40;
-            double width = minimumHeight * 1.48;
+			minimumHeight += 40;
+			double width = minimumHeight*1.48;
 
-            this.Width = width;
-            this.Width = width;
-            this.Height = minimumHeight;
-            this.MinHeight = minimumHeight;
-        }
+			Width = width;
+			Width = width;
+			Height = minimumHeight;
+			MinHeight = minimumHeight;
+		}
 
-        public ViewStreamWindow(ViewStream viewStream, string channelName, double minimumHeight)
-            : this()
-        {
-            this.Title = "View stream - " + channelName;
-            this.ViewStream = viewStream;
-            container.Child = this.ViewStream;
+		public ViewStreamWindow(ViewStream viewStream, string channelName, double minimumHeight)
+			: this()
+		{
+			Title = "View stream - " + channelName;
+			ViewStream = viewStream;
+			container.Child = ViewStream;
 
-            minimumHeight += 40;
-            double width = minimumHeight * 1.48;
+			minimumHeight += 40;
+			double width = minimumHeight*1.48;
 
-            this.Width = width;
-            this.Width = width;
-            this.Height = minimumHeight;
-            this.MinHeight = minimumHeight;
-        }
+			Width = width;
+			Width = width;
+			Height = minimumHeight;
+			MinHeight = minimumHeight;
+		}
 
-        # region Public Members
+		# region Public Members
 
-        public ViewStream ViewStream;
+		public ViewStream ViewStream;
 
-        # endregion
+		# endregion
 
-        # region Private Members
+		# region Private Members
 
-        # endregion
+		# endregion
 
-        # region Event Handlers
+		# region Event Handlers
 
-        private void Window_Closed_1(object sender, EventArgs e)
-        {
-            container.Child = null;
-        }
+		private void Window_Closed_1(object sender, EventArgs e)
+		{
+			container.Child = null;
+		}
 
-        # endregion
-    }
+		# endregion
+	}
 }

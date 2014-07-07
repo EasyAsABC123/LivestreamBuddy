@@ -5,81 +5,83 @@ using LiveStreamBuddy.Classes;
 
 namespace LiveStreamBuddy.Controls
 {
-    /// <summary>
-    /// Interaction logic for Options.xaml
-    /// </summary>
-    public partial class Options : UserControl
-    {
-        public Options()
-        {
-            InitializeComponent();
+	/// <summary>
+	///     Interaction logic for Options.xaml
+	/// </summary>
+	public partial class Options : UserControl
+	{
+		public Options()
+		{
+			InitializeComponent();
 
-            this.UserOptions = DataFileManager.GetOptions();
+			UserOptions = DataFileManager.GetOptions();
 
-            chkStreamOpenStyle.IsChecked = this.UserOptions.OpenStreamsInNewTab;
-            chkStreamViewShow.IsChecked = this.UserOptions.ShowStreamFeedWhenOpening;
-            chkStreamShowChatTimestamps.IsChecked = this.UserOptions.ShowTimestampsInChat;
-            chkEnableDebugLogging.IsChecked = this.UserOptions.EnableDebugLogging;
-            txtChatTextSize.Text = this.UserOptions.ChatTextSize.ToString();
-            chkShowEmoticonsInChat.IsChecked = this.UserOptions.ShowEmoticonsInChat;
-            chkLogAllIRCTraffic.IsChecked = this.UserOptions.LogAllIRCTraffic;
-        }
+			chkStreamOpenStyle.IsChecked = UserOptions.OpenStreamsInNewTab;
+			chkStreamViewShow.IsChecked = UserOptions.ShowStreamFeedWhenOpening;
+			chkStreamShowChatTimestamps.IsChecked = UserOptions.ShowTimestampsInChat;
+			chkEnableDebugLogging.IsChecked = UserOptions.EnableDebugLogging;
+			txtChatTextSize.Text = UserOptions.ChatTextSize.ToString();
+			chkShowEmoticonsInChat.IsChecked = UserOptions.ShowEmoticonsInChat;
+			chkLogAllIRCTraffic.IsChecked = UserOptions.LogAllIRCTraffic;
+		}
 
-        # region Public Members
+		# region Public Members
 
-        public Classes.Options UserOptions { get; set; }
+		public Classes.Options UserOptions { get; set; }
 
-        # endregion
+		# endregion
 
-        # region Event Handlers
+		# region Event Handlers
 
-        private void ButtonSaveClick(object sender, RoutedEventArgs e)
-        {
-            string isValid = string.Empty;
+		private void ButtonSaveClick(object sender, RoutedEventArgs e)
+		{
+			string isValid = string.Empty;
 
-            this.UserOptions.OpenStreamsInNewTab = chkStreamOpenStyle.IsChecked.Value;
-            this.UserOptions.ShowStreamFeedWhenOpening = chkStreamViewShow.IsChecked.Value;
-            this.UserOptions.ShowTimestampsInChat = chkStreamShowChatTimestamps.IsChecked.Value;
-            this.UserOptions.EnableDebugLogging = chkEnableDebugLogging.IsChecked.Value;
-            this.UserOptions.LogAllIRCTraffic = chkLogAllIRCTraffic.IsChecked.Value;
+			UserOptions.OpenStreamsInNewTab = chkStreamOpenStyle.IsChecked.Value;
+			UserOptions.ShowStreamFeedWhenOpening = chkStreamViewShow.IsChecked.Value;
+			UserOptions.ShowTimestampsInChat = chkStreamShowChatTimestamps.IsChecked.Value;
+			UserOptions.EnableDebugLogging = chkEnableDebugLogging.IsChecked.Value;
+			UserOptions.LogAllIRCTraffic = chkLogAllIRCTraffic.IsChecked.Value;
 
-            int chatTextSize;
-            if (int.TryParse(txtChatTextSize.Text, out chatTextSize))
-            {
-                this.UserOptions.ChatTextSize = chatTextSize;
-            }
-            else
-            {
-                isValid += "You must use real numbers for the 'Chat text size' field." + Environment.NewLine;
-            }
+			int chatTextSize;
+			if (int.TryParse(txtChatTextSize.Text, out chatTextSize))
+			{
+				UserOptions.ChatTextSize = chatTextSize;
+			}
+			else
+			{
+				isValid += "You must use real numbers for the 'Chat text size' field." + Environment.NewLine;
+			}
 
-            this.UserOptions.ShowEmoticonsInChat = chkShowEmoticonsInChat.IsChecked.Value;
+			UserOptions.ShowEmoticonsInChat = chkShowEmoticonsInChat.IsChecked.Value;
 
-            if (string.IsNullOrEmpty(isValid))
-            {
-                DataFileManager.SetOptions(this.UserOptions);
-                DoOnSaved();
-            }
-            else
-            {
-                MessageBox.Show(isValid);
-            }
-        }
+			if (string.IsNullOrEmpty(isValid))
+			{
+				DataFileManager.SetOptions(UserOptions);
+				DoOnSaved();
+			}
+			else
+			{
+				MessageBox.Show(isValid);
+			}
+		}
 
-        # endregion
+		# endregion
 
-        # region Custom Events
+		# region Custom Events
 
-        public delegate void OptionsSavedHandler(object sender, EventArgs e);
-        public event OptionsSavedHandler OnSaved;
-        private void DoOnSaved()
-        {
-            if (OnSaved != null)
-            {
-                OnSaved(this, null);
-            }
-        }
+		public delegate void OptionsSavedHandler(object sender, EventArgs e);
 
-        # endregion
-    }
+		public event OptionsSavedHandler OnSaved;
+
+		private void DoOnSaved()
+		{
+			if (OnSaved != null)
+			{
+				OnSaved(this, null);
+			}
+		}
+
+		# endregion
+	}
 }

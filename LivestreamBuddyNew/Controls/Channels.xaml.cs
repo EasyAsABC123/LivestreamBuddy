@@ -14,397 +14,408 @@ using LobsterKnifeFight;
 
 namespace LiveStreamBuddy.Controls
 {
-    /// <summary>
-    /// Interaction logic for Streams.xaml
-    /// </summary>
-    public partial class Channels : UserControl
-    {
-        public Channels()
-        {
-            InitializeComponent();
-            Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
+	/// <summary>
+	///     Interaction logic for Streams.xaml
+	/// </summary>
+	public partial class Channels : UserControl
+	{
+		public Channels()
+		{
+			InitializeComponent();
+			Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
 
-            channels = new ObservableCollection<ChannelInfo>();
-            onlineImage = new BitmapImage(new Uri("pack://application:,,,/LivestreamBuddyNew;component/Resources/check.png"));
-            offlineImage = new BitmapImage(new Uri("pack://application:,,,/LivestreamBuddyNew;component/Resources/grayX.png"));
+			channels = new ObservableCollection<ChannelInfo>();
+			onlineImage = new BitmapImage(new Uri("pack://application:,,,/LivestreamBuddyNew;component/Resources/check.png"));
+			offlineImage = new BitmapImage(new Uri("pack://application:,,,/LivestreamBuddyNew;component/Resources/grayX.png"));
 
-            addStreamToFavoritesList("teamxim");
+			addStreamToFavoritesList("teamxim");
 
-            foreach (string channel in DataFileManager.GetFavoriteChannels())
-            {
-                addStreamToFavoritesList(channel, true);
-            }
+			foreach (string channel in DataFileManager.GetFavoriteChannels())
+			{
+				addStreamToFavoritesList(channel, true);
+			}
 
-            streamManager = new StreamManager();
+			streamManager = new StreamManager();
 
-            grdChannels.ItemsSource = channels;
-            firstReportDone = false;
+			grdChannels.ItemsSource = channels;
+			firstReportDone = false;
 
-            worker = new BackgroundWorker();
-            worker.WorkerReportsProgress = true;
-            worker.WorkerSupportsCancellation = true;
-            worker.DoWork += worker_DoWork;
-            worker.ProgressChanged += worker_ProgressChanged;
-            worker.RunWorkerAsync();
-        }
+			worker = new BackgroundWorker();
+			worker.WorkerReportsProgress = true;
+			worker.WorkerSupportsCancellation = true;
+			worker.DoWork += worker_DoWork;
+			worker.ProgressChanged += worker_ProgressChanged;
+			worker.RunWorkerAsync();
+		}
 
-        public Channels(User user)
-            : this()
-        {
-            this.User = user;
-        }
+		public Channels(User user)
+			: this()
+		{
+			User = user;
+		}
 
-        # region Public Properties
+		# region Public Properties
 
-        public User User { get; set; }
-        public delegate void StreamOpenHandler(object sender, StreamOpenEventArgs e);
-        public event StreamOpenHandler OnStreamOpen;
+		public delegate void StreamOpenHandler(object sender, StreamOpenEventArgs e);
 
-        # endregion
+		public User User { get; set; }
 
-        # region Private Properties
+		public event StreamOpenHandler OnStreamOpen;
 
-        private ObservableCollection<ChannelInfo> channels;
-        private StreamManager streamManager;
-        private BackgroundWorker worker;
-        private BitmapImage onlineImage;
-        private BitmapImage offlineImage;
-        private bool firstReportDone;
+		# endregion
 
-        # endregion
+		# region Private Properties
 
-        # region Private Methods
+		private readonly ObservableCollection<ChannelInfo> channels;
+		private readonly BitmapImage offlineImage;
+		private readonly BitmapImage onlineImage;
+		private readonly StreamManager streamManager;
+		private readonly BackgroundWorker worker;
+		private bool firstReportDone;
 
-        private void openStream(string channelName)
-        {
-            if (OnStreamOpen != null)
-            {
-                StreamOpenEventArgs args = new StreamOpenEventArgs { ChannelName = channelName.Trim() };
-                OnStreamOpen(this, args);
-            }
-        }
+		# endregion
 
-        private bool streamExists(string channelName)
-        {
-	        return channels.Any(channelInfo => string.Compare(channelInfo.Name, channelName, StringComparison.OrdinalIgnoreCase) == 0);
-        }
+		# region Private Methods
 
-	    private void addStreamToFavoritesList(string streamName, bool isFavorite = false)
-        {
-            if (!streamExists(streamName))
-            {
-                channels.Add(new ChannelInfo { Name = streamName, IsFavoriteChannel = isFavorite });
-            }
-        }
+		private void openStream(string channelName)
+		{
+			if (OnStreamOpen != null)
+			{
+				var args = new StreamOpenEventArgs {ChannelName = channelName.Trim()};
+				OnStreamOpen(this, args);
+			}
+		}
 
-        private void addStreamToFavoritesList(LobsterKnifeFight.Stream stream, bool isFavorite = false)
-        {
-            if (stream.Channel != null && !streamExists(stream.Channel.Name))
-            {
-                BitmapImage indicator = offlineImage;
+		private bool streamExists(string channelName)
+		{
+			return
+				channels.Any(channelInfo => string.Compare(channelInfo.Name, channelName, StringComparison.OrdinalIgnoreCase) == 0);
+		}
 
-                if (stream.IsOnline)
-                {
-                    indicator = onlineImage;
-                }
+		private void addStreamToFavoritesList(string streamName, bool isFavorite = false)
+		{
+			if (!streamExists(streamName))
+			{
+				channels.Add(new ChannelInfo {Name = streamName, IsFavoriteChannel = isFavorite});
+			}
+		}
 
-                channels.Add(new ChannelInfo
-                    {
-                        Name = stream.Channel.Name,
-                        StreamTitle = stream.Channel.Title,
-                        Game = stream.Game,
-                        Viewers = stream.ViewerCount,
-                        OnlineIndicator = indicator, 
-                        IsFavoriteChannel = isFavorite
-                    });
-            }
-        }
+		private void addStreamToFavoritesList(LobsterKnifeFight.Stream stream, bool isFavorite = false)
+		{
+			if (stream.Channel != null && !streamExists(stream.Channel.Name))
+			{
+				BitmapImage indicator = offlineImage;
 
-        private string getChannelsFromList()
-        {
-	        return channels.Aggregate(string.Empty, (current, channel) => current + (channel.Name + ","));
-        }
+				if (stream.IsOnline)
+				{
+					indicator = onlineImage;
+				}
 
-	    private void workerCheckChannelsStatus()
-        {
-            string channels = getChannelsFromList();
-            List<LobsterKnifeFight.Stream> streams = null;
+				channels.Add(new ChannelInfo
+				{
+					Name = stream.Channel.Name,
+					StreamTitle = stream.Channel.Title,
+					Game = stream.Game,
+					Viewers = stream.ViewerCount,
+					OnlineIndicator = indicator,
+					IsFavoriteChannel = isFavorite
+				});
+			}
+		}
 
-            if (!string.IsNullOrEmpty(channels))
-            {
-                streams = streamManager.GetStreams(channels);
+		private string getChannelsFromList()
+		{
+			return channels.Aggregate(string.Empty, (current, channel) => current + (channel.Name + ","));
+		}
 
-                if (streams != null)
-                {
-                    worker.ReportProgress(0, streams);
-                }
-            }
-        }
+		private void workerCheckChannelsStatus()
+		{
+			string channels = getChannelsFromList();
+			List<LobsterKnifeFight.Stream> streams = null;
 
-        # endregion
+			if (!string.IsNullOrEmpty(channels))
+			{
+				streams = streamManager.GetStreams(channels);
 
-        # region Events
+				if (streams != null)
+				{
+					worker.ReportProgress(0, streams);
+				}
+			}
+		}
 
-        private void btnAddToFavoriteChannel_Click(object sender, RoutedEventArgs e)
-        {
-            SingleTextBoxWindow window = new SingleTextBoxWindow("Add Favorite Channel", "Channel: ", "Add");
+		# endregion
 
-            window.Owner = Application.Current.MainWindow;
+		# region Events
 
-            if ((bool)window.ShowDialog())
-            {
-                DataFileManager.AddFavoriteChannel(window.Value);
-                LobsterKnifeFight.Stream stream = streamManager.GetStream(window.Value.ToLower());
+		private void btnAddToFavoriteChannel_Click(object sender, RoutedEventArgs e)
+		{
+			var window = new SingleTextBoxWindow("Add Favorite Channel", "Channel: ", "Add");
 
-                if (stream.IsOnline)
-                {
-                    addStreamToFavoritesList(stream, true);
-                }
-                else
-                {
-                    addStreamToFavoritesList(window.Value.ToLower(), true);
-                }
-            }
-        }
+			window.Owner = Application.Current.MainWindow;
 
-        void worker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            workerCheckChannelsStatus();
+			if ((bool) window.ShowDialog())
+			{
+				DataFileManager.AddFavoriteChannel(window.Value);
+				LobsterKnifeFight.Stream stream = streamManager.GetStream(window.Value.ToLower());
 
-            while (!worker.CancellationPending)
-            {
-                Thread.Sleep(60000);
+				if (stream.IsOnline)
+				{
+					addStreamToFavoritesList(stream, true);
+				}
+				else
+				{
+					addStreamToFavoritesList(window.Value.ToLower(), true);
+				}
+			}
+		}
 
-                workerCheckChannelsStatus();
-            }
-        }
+		private void worker_DoWork(object sender, DoWorkEventArgs e)
+		{
+			workerCheckChannelsStatus();
 
-        void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            List<LobsterKnifeFight.Stream> streams = e.UserState as List<LobsterKnifeFight.Stream>;
+			while (!worker.CancellationPending)
+			{
+				Thread.Sleep(60000);
 
-            foreach (ChannelInfo channel in channels)
-            {
-                bool found = false;
+				workerCheckChannelsStatus();
+			}
+		}
 
-                foreach (LobsterKnifeFight.Stream stream in streams.Where(stream => string.Compare(channel.Name, stream.Channel.Name, StringComparison.OrdinalIgnoreCase) == 0))
-                {
-	                channel.StreamTitle = stream.Channel.Title;
-	                channel.Game = stream.Game;
-	                channel.Viewers = stream.ViewerCount;
-	                channel.OnlineIndicator = onlineImage;
+		private void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+		{
+			var streams = e.UserState as List<LobsterKnifeFight.Stream>;
 
-	                found = true;
-	                break;
-                }
+			foreach (ChannelInfo channel in channels)
+			{
+				bool found = false;
 
-                if (!found)
-                {
-                    channel.StreamTitle = string.Empty;
-                    channel.Game = string.Empty;
-                    channel.Viewers = 0;
-                    channel.OnlineIndicator = offlineImage;
-                }
-            }
+				foreach (
+					LobsterKnifeFight.Stream stream in
+						streams.Where(stream => string.Compare(channel.Name, stream.Channel.Name, StringComparison.OrdinalIgnoreCase) == 0)
+					)
+				{
+					channel.StreamTitle = stream.Channel.Title;
+					channel.Game = stream.Game;
+					channel.Viewers = stream.ViewerCount;
+					channel.OnlineIndicator = onlineImage;
 
-            if (!firstReportDone)
-            {
-                btnShowFeaturedStreams.IsEnabled = true;
-                btnShowFollowedStreams.IsEnabled = true;
-                btnAddToFavoriteChannel.IsEnabled = true;
-                btnGoToChannel.IsEnabled = true;
-                firstReportDone = true;
-            }
-        }
+					found = true;
+					break;
+				}
 
-        void Dispatcher_ShutdownStarted(object sender, EventArgs e)
-        {
-            worker.CancelAsync();
-        }
+				if (!found)
+				{
+					channel.StreamTitle = string.Empty;
+					channel.Game = string.Empty;
+					channel.Viewers = 0;
+					channel.OnlineIndicator = offlineImage;
+				}
+			}
 
-        private void btnGoToChannel_Click(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(txtGoToChannel.Text))
-            {
-                MessageBox.Show("You must provide a channel name.");
-            }
-            else
-            {
-                openStream(txtGoToChannel.Text.ToLower());
-            }
-        }
+			if (!firstReportDone)
+			{
+				btnShowFeaturedStreams.IsEnabled = true;
+				btnShowFollowedStreams.IsEnabled = true;
+				btnAddToFavoriteChannel.IsEnabled = true;
+				btnGoToChannel.IsEnabled = true;
+				firstReportDone = true;
+			}
+		}
 
-        private void grdChannels_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            ChannelInfo channel = null;
+		private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
+		{
+			worker.CancelAsync();
+		}
 
-            try
-            {
-                if (grdChannels.SelectedItems.Count > 0)
-                {
-                    channel = (ChannelInfo)grdChannels.SelectedItems[0];
-                }
-            }
-            catch { }
+		private void btnGoToChannel_Click(object sender, RoutedEventArgs e)
+		{
+			if (string.IsNullOrEmpty(txtGoToChannel.Text))
+			{
+				MessageBox.Show("You must provide a channel name.");
+			}
+			else
+			{
+				openStream(txtGoToChannel.Text.ToLower());
+			}
+		}
 
-            if (channel != null)
-            {
-                openStream(channel.Name);
-            }
-        }
+		private void grdChannels_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+		{
+			ChannelInfo channel = null;
 
-        private void ShowFeaturedStreamsClick(object sender, RoutedEventArgs e)
-        {
-            foreach (LobsterKnifeFight.Stream stream in streamManager.GetFeaturedStreams())
-            {
-                addStreamToFavoritesList(stream);
-            }
-        }
+			try
+			{
+				if (grdChannels.SelectedItems.Count > 0)
+				{
+					channel = (ChannelInfo) grdChannels.SelectedItems[0];
+				}
+			}
+			catch
+			{
+			}
 
-        private void ShowFollowedStreamsClick(object sender, RoutedEventArgs e)
-        {
-            Utility.GetAccessToken(this.User);
+			if (channel != null)
+			{
+				openStream(channel.Name);
+			}
+		}
 
-            try
-            {
-                if (!string.IsNullOrEmpty(User.AccessToken))
-                {
-                    foreach (LobsterKnifeFight.Stream stream in streamManager.GetFollowedStreams(this.User))
-                    {
-                        addStreamToFavoritesList(stream);
-                    }
-                }
-                else
-                {
-                    throw new Exception();
-                }
-            }
-            catch
-            {
-                Utility.ClearUserData(this.User);
+		private void ShowFeaturedStreamsClick(object sender, RoutedEventArgs e)
+		{
+			foreach (LobsterKnifeFight.Stream stream in streamManager.GetFeaturedStreams())
+			{
+				addStreamToFavoritesList(stream);
+			}
+		}
 
-                MessageBox.Show("Something went wrong. Try again.");
-            }
-        }
+		private void ShowFollowedStreamsClick(object sender, RoutedEventArgs e)
+		{
+			Utility.GetAccessToken(User);
 
-        private void RemoveChannelClick(object sender, RoutedEventArgs e)
-        {
-            if (grdChannels.SelectedItems.Count > 0)
-            {
-                MessageBoxResult result = MessageBox.Show("Are you sure you want to remove the selected channel(s)?", "Confirm", MessageBoxButton.YesNo);
+			try
+			{
+				if (!string.IsNullOrEmpty(User.AccessToken))
+				{
+					foreach (LobsterKnifeFight.Stream stream in streamManager.GetFollowedStreams(User))
+					{
+						addStreamToFavoritesList(stream);
+					}
+				}
+				else
+				{
+					throw new Exception();
+				}
+			}
+			catch
+			{
+				Utility.ClearUserData(User);
 
-                if (result == MessageBoxResult.Yes)
-                {
-                    List<ChannelInfo> channelsToRemove = new List<ChannelInfo>();
+				MessageBox.Show("Something went wrong. Try again.");
+			}
+		}
 
-                    foreach (ChannelInfo channelInfo in grdChannels.SelectedItems)
-                    {
-                        if (string.Compare("teamxim", channelInfo.Name, StringComparison.OrdinalIgnoreCase) != 0)
-                        {
-                            if (channelInfo.IsFavoriteChannel)
-                            {
-                                DataFileManager.RemoveFavoriteChannel(channelInfo.Name);
-                            }
+		private void RemoveChannelClick(object sender, RoutedEventArgs e)
+		{
+			if (grdChannels.SelectedItems.Count > 0)
+			{
+				MessageBoxResult result = MessageBox.Show("Are you sure you want to remove the selected channel(s)?", "Confirm",
+					MessageBoxButton.YesNo);
 
-                            channelsToRemove.Add(channelInfo);
-                        }
-                    }
+				if (result == MessageBoxResult.Yes)
+				{
+					var channelsToRemove = new List<ChannelInfo>();
 
-                    foreach (ChannelInfo channelInfo in channelsToRemove)
-                    {
-                        channels.Remove(channelInfo);
-                    }
-                }
-            }
-        }
+					foreach (ChannelInfo channelInfo in grdChannels.SelectedItems)
+					{
+						if (string.Compare("teamxim", channelInfo.Name, StringComparison.OrdinalIgnoreCase) != 0)
+						{
+							if (channelInfo.IsFavoriteChannel)
+							{
+								DataFileManager.RemoveFavoriteChannel(channelInfo.Name);
+							}
 
-        private void grdChannels_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (grdChannels.SelectedIndex > -1)
-            {
-                btnRemoveChannel.IsEnabled = true;
-            }
-            else
-            {
-                btnRemoveChannel.IsEnabled = false;
-            }
-        }
+							channelsToRemove.Add(channelInfo);
+						}
+					}
 
-        # endregion
-    }
+					foreach (ChannelInfo channelInfo in channelsToRemove)
+					{
+						channels.Remove(channelInfo);
+					}
+				}
+			}
+		}
 
-    public class StreamOpenEventArgs : EventArgs
-    {
-        public string ChannelName { get; set; }
-    }
+		private void grdChannels_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (grdChannels.SelectedIndex > -1)
+			{
+				btnRemoveChannel.IsEnabled = true;
+			}
+			else
+			{
+				btnRemoveChannel.IsEnabled = false;
+			}
+		}
 
-    public class ChannelInfo : INotifyPropertyChanged
-    {
-        private string name = string.Empty;
-        public string Name
-        {
-            get { return name; }
-            set
-            {
-                name = value;
-                RaisePropertyChanged("Name");
-            }
-        }
+		# endregion
+	}
 
-        private string streamTitle = string.Empty;
-        public string StreamTitle
-        {
-            get { return streamTitle; }
-            set
-            {
-                streamTitle = value;
-                RaisePropertyChanged("StreamTitle");
-            }
-        }
+	public class StreamOpenEventArgs : EventArgs
+	{
+		public string ChannelName { get; set; }
+	}
 
-        private string game = string.Empty;
-        public string Game
-        {
-            get { return game; }
-            set
-            {
-                
-                game = HttpUtility.HtmlDecode(value);
-                RaisePropertyChanged("Game");
-            }
-        }
+	public class ChannelInfo : INotifyPropertyChanged
+	{
+		private string game = string.Empty;
+		private string name = string.Empty;
+		private BitmapImage onlineIndicator;
 
-        private long viewers = 0;
-        public long Viewers
-        {
-            get { return viewers; }
-            set
-            {
-                viewers = value;
-                RaisePropertyChanged("Viewers");
-            }
-        }
+		private string streamTitle = string.Empty;
+		private long viewers;
 
-        private BitmapImage onlineIndicator = null;
-        public BitmapImage OnlineIndicator
-        {
-            get { return onlineIndicator; }
-            set
-            {
-                onlineIndicator = value;
-                RaisePropertyChanged("OnlineIndicator");
-            }
-        }
+		public string Name
+		{
+			get { return name; }
+			set
+			{
+				name = value;
+				RaisePropertyChanged("Name");
+			}
+		}
 
-        public bool IsFavoriteChannel { get; set; }
+		public string StreamTitle
+		{
+			get { return streamTitle; }
+			set
+			{
+				streamTitle = value;
+				RaisePropertyChanged("StreamTitle");
+			}
+		}
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged(string caller)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(caller));
-            }
-        }
-    }
+		public string Game
+		{
+			get { return game; }
+			set
+			{
+				game = HttpUtility.HtmlDecode(value);
+				RaisePropertyChanged("Game");
+			}
+		}
+
+		public long Viewers
+		{
+			get { return viewers; }
+			set
+			{
+				viewers = value;
+				RaisePropertyChanged("Viewers");
+			}
+		}
+
+		public BitmapImage OnlineIndicator
+		{
+			get { return onlineIndicator; }
+			set
+			{
+				onlineIndicator = value;
+				RaisePropertyChanged("OnlineIndicator");
+			}
+		}
+
+		public bool IsFavoriteChannel { get; set; }
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void RaisePropertyChanged(string caller)
+		{
+			if (PropertyChanged != null)
+			{
+				PropertyChanged(this, new PropertyChangedEventArgs(caller));
+			}
+		}
+	}
 }
